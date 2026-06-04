@@ -1,21 +1,20 @@
-package br.edu.cs.poo.ac.bolsa.entidade; 
+package br.edu.cs.poo.ac.bolsa.entidade;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
-import java.math.BigDecimal; 
-import java.time.LocalDate; 
+import br.edu.cs.poo.ac.bolsa.util.Registro;
 
-public class Investidor implements Serializable { 
-    
+public abstract class Investidor extends Registro {
+
     private String nome;
-    private Endereco endereco; 
-    
+    private Endereco endereco;
     private LocalDate dataCriacao;
-    private BigDecimal bonus = BigDecimal.ZERO; 
-    private Contatos contatos; 
-    
+    private BigDecimal bonus = BigDecimal.ZERO;
+    private Contatos contatos;
+
     public Investidor() {}
-    
+
     public Investidor(String nome, Endereco endereco,
                       LocalDate dataCriacao, BigDecimal bonus,
                       Contatos contatos) {
@@ -25,7 +24,9 @@ public class Investidor implements Serializable {
         this.bonus = bonus;
         this.contatos = contatos;
     }
-    
+
+    public abstract BigDecimal getEntradaFinanceira();
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
@@ -34,25 +35,23 @@ public class Investidor implements Serializable {
 
     public Contatos getContatos() { return contatos; }
     public void setContatos(Contatos contatos) { this.contatos = contatos; }
-    
+
     protected LocalDate getDataCriacao() { return dataCriacao; }
     protected void setDataCriacao(LocalDate dataCriacao) { this.dataCriacao = dataCriacao; }
-    
+
     public BigDecimal getBonus() { return bonus; }
-    
+
     public int getIdade() {
-    	return LocalDate.now().getYear() - dataCriacao.getYear();
+        return LocalDate.now().getYear() - dataCriacao.getYear();
     }
-    
+
     public void creditarBonus(BigDecimal valor) {
         if (valor == null) return;
-        this.bonus = this.bonus.add(valor); 
-        
+        this.bonus = this.bonus.add(valor);
     }
 
     public void debitarBonus(BigDecimal valor) {
         if (valor == null) return;
-        this.bonus = this.bonus.subtract(valor); 
-        
+        this.bonus = this.bonus.subtract(valor);
     }
 }

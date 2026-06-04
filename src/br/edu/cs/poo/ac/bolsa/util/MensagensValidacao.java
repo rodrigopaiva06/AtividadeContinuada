@@ -19,6 +19,10 @@ public class MensagensValidacao {
         return mensagens.isEmpty();
     }
 
+    public boolean contem(String mensagem) {
+        return mensagens.contains(mensagem);
+    }
+
     public String[] getMensagens() {
         String[] arr = new String[mensagens.size()];
         int i = 0;

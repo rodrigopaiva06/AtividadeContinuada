@@ -9,6 +9,7 @@ import br.edu.cs.poo.ac.bolsa.entidade.Contatos;
 import br.edu.cs.poo.ac.bolsa.entidade.ComparadorInvestidorPessoaRenda;
 import br.edu.cs.poo.ac.bolsa.entidade.Endereco;
 import br.edu.cs.poo.ac.bolsa.entidade.FaixaRenda;
+import br.edu.cs.poo.ac.bolsa.entidade.Investidor;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorEmpresa;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
 import br.edu.cs.poo.ac.bolsa.entidade.OrdenacaoInvestidorPessoa;
@@ -215,5 +216,26 @@ public class InvestidorMediator {
         }
         Ordenador.ordenar(comparaveis, comparador);
         return todos;
+    }
+
+    public Investidor buscarInvestidor(String identificador) {
+        if (identificador == null || identificador.trim().isEmpty()) return null;
+        if (ValidadorCpfCnpj.validarCpf(identificador) == null) {
+            return buscarInvestidorPessoa(identificador);
+        }
+        if (ValidadorCpfCnpj.validarCnpj(identificador) == null) {
+            return buscarInvestidorEmpresa(identificador);
+        }
+        InvestidorPessoa ip = daoInvPes.buscar(identificador);
+        if (ip != null) return ip;
+        return daoInvEmp.buscar(identificador);
+    }
+
+    public MensagensValidacao alterarInvestidor(Investidor investidor) {
+        if (investidor instanceof InvestidorPessoa) {
+            return alterarInvestidorPessoa((InvestidorPessoa) investidor);
+        } else {
+            return alterarInvestidorEmpresa((InvestidorEmpresa) investidor);
+        }
     }
 }

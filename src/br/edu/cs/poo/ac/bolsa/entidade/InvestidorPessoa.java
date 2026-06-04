@@ -25,6 +25,16 @@ public class InvestidorPessoa extends Investidor implements Serializable, Compar
     }
 
     @Override
+    public String getIdentificador() {
+        return cpf;
+    }
+
+    @Override
+    public BigDecimal getEntradaFinanceira() {
+        return new BigDecimal(renda);
+    }
+
+    @Override
     public int comparar(Comparavel comp) {
         if (!(comp instanceof InvestidorPessoa)) {
             throw new RuntimeException("O argumento nao e do tipo InvestidorPessoa");

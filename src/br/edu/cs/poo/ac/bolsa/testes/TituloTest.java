@@ -1,13 +1,13 @@
 package br.edu.cs.poo.ac.bolsa.testes;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import br.edu.cs.poo.ac.bolsa.entidade.Ativo;
 import br.edu.cs.poo.ac.bolsa.entidade.FaixaRenda;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorEmpresa;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
 import br.edu.cs.poo.ac.bolsa.entidade.StatusTitulo;
 import br.edu.cs.poo.ac.bolsa.entidade.Titulo;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,24 +16,25 @@ public class TituloTest {
 
     private InvestidorPessoa pessoa;
     private InvestidorEmpresa empresa;
-    private Ativo ativo;
+    private Ativo ativo = new Ativo(1010,"Ativo 1", 1000.0, 10000000.0, 0.1, 4.0, FaixaRenda.REGULAR, 120);
 
     @BeforeEach
     void setup() {
         pessoa = new InvestidorPessoa(
                 "MARCOS", null, null, BigDecimal.ZERO, null,
-                "12345678901", 30000.00, FaixaRenda.REGULAR);
+                        "12345678901", 30000.00, FaixaRenda.REGULAR);
         empresa = new InvestidorEmpresa(
-                "ACME", null, null, BigDecimal.ZERO, null,
+                "ACME", null, null,BigDecimal.ZERO, null,
                 "12345678901234", 3000000.00);
         ativo = new Ativo(
-                123456, "C-BONDS", 10000.00, 1000000000.00,
-                0.10, 1.00, FaixaRenda.REGULAR, 24);
+                123456, "C-BONDS",10000.00, 1000000000.00,
+                0.10, 1.00,FaixaRenda.REGULAR, 24);
     }
 
     private Titulo criarTituloPadrao() {
         return new Titulo(
-                pessoa, empresa, ativo,
+                pessoa,
+                ativo,
                 new BigDecimal("1000.00"),
                 new BigDecimal("1000.00"),
                 new BigDecimal("1.0"),
@@ -119,27 +120,29 @@ public class TituloTest {
 
     @Test
     void testGetNumeroParaInvestidorPessoa() {
-        InvestidorPessoa p = new InvestidorPessoa("MARCUS", null, null,
+        InvestidorPessoa pessoa = new InvestidorPessoa("MARCUS", null, null,
                 BigDecimal.ZERO, null, null, 100000.0, FaixaRenda.DIFERENCIADA);
-        p.setCpf("12345678901");
+        pessoa.setCpf("12345678901");
         LocalDate dataAplicacao = LocalDate.of(2024, 3, 10);
-        Titulo titulo = new Titulo(p, null, ativo, BigDecimal.TEN,
-                BigDecimal.TEN, BigDecimal.ONE, dataAplicacao,
-                dataAplicacao.plusDays(30), null, StatusTitulo.ATIVO);
-        String esperado = "000" + p.getCpf() + ativo.getCodigo() + "202403100000";
+        Titulo titulo = new Titulo(
+                pessoa, ativo, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE,
+                dataAplicacao, dataAplicacao.plusDays(30), null, StatusTitulo.ATIVO
+        );
+        String esperado = "000" + pessoa.getCpf() + ativo.getCodigo() + "202403100000";
         assertEquals(esperado, titulo.getNumero());
     }
 
     @Test
     void testGetNumeroParaInvestidorEmpresa() {
-        InvestidorEmpresa emp = new InvestidorEmpresa("ACME", null, null,
+        InvestidorEmpresa empresa = new InvestidorEmpresa("ACME", null, null,
                 BigDecimal.ZERO, null, null, 100000.0);
-        emp.setCnpj("11222333444455");
+        empresa.setCnpj("11222333444455");
         LocalDate dataAplicacao = LocalDate.of(2024, 5, 20);
-        Titulo titulo = new Titulo(null, emp, ativo, BigDecimal.TEN,
-                BigDecimal.TEN, BigDecimal.ONE, dataAplicacao,
-                dataAplicacao.plusDays(60), null, StatusTitulo.ATIVO);
-        String esperado = emp.getCnpj() + ativo.getCodigo() + "202405200000";
+        Titulo titulo = new Titulo(
+                empresa, ativo, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE,
+                dataAplicacao, dataAplicacao.plusDays(60), null, StatusTitulo.ATIVO
+        );
+        String esperado = empresa.getCnpj() + ativo.getCodigo() + "202405200000";
         assertEquals(esperado, titulo.getNumero());
     }
 }
