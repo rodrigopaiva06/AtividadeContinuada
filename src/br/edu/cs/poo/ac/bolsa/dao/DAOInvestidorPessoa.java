@@ -1,47 +1,57 @@
 package br.edu.cs.poo.ac.bolsa.dao;
 
+import java.io.Serializable;
+
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
 
 public class DAOInvestidorPessoa extends DAOGenerico {
 
     public DAOInvestidorPessoa() {
-        inicializarCadastro(InvestidorPessoa.class); 
+        inicializarCadastro(InvestidorPessoa.class);
     }
 
     public InvestidorPessoa buscar(String cpf) {
-        return (InvestidorPessoa) cadastro.buscar(cpf); 
+        return (InvestidorPessoa) cadastro.buscar(cpf);
     }
 
     public boolean incluir(InvestidorPessoa pessoa) {
-        if (buscar(pessoa.getCpf()) == null) { 
-            cadastro.incluir(pessoa, pessoa.getCpf()); 
+        if (buscar(pessoa.getCpf()) == null) {
+            cadastro.incluir(pessoa, pessoa.getCpf());
             return true;
-        }
-
-        else {
-            return false; 
+        } else {
+            return false;
         }
     }
 
-    public boolean alterar(InvestidorPessoa pessoa) {
-        if (buscar(pessoa.getCpf()) != null) { 
-            cadastro.alterar(pessoa, pessoa.getCpf()); 
-            return true;
-        }
+    public boolean incluirInvestidorPessoa(InvestidorPessoa pessoa) {
+        return incluir(pessoa);
+    }
 
-        else {
-            return false; 
+    public boolean alterar(InvestidorPessoa pessoa) {
+        if (buscar(pessoa.getCpf()) != null) {
+            cadastro.alterar(pessoa, pessoa.getCpf());
+            return true;
+        } else {
+            return false;
         }
     }
 
     public boolean excluir(String cpf) {
-        if (buscar(cpf) != null) { 
-            cadastro.excluir(cpf); 
+        if (buscar(cpf) != null) {
+            cadastro.excluir(cpf);
             return true;
+        } else {
+            return false;
         }
+    }
 
-        else {
-            return false; 
+    public InvestidorPessoa[] consultarTodos() {
+        Serializable[] todos = cadastro.buscarTodos();
+        if (todos == null) return null;
+        InvestidorPessoa[] resultado = new InvestidorPessoa[todos.length];
+        for (int i = 0; i < todos.length; i++) {
+            resultado[i] = (InvestidorPessoa) todos[i];
         }
+        return resultado;
     }
 }
