@@ -1,0 +1,23 @@
+package br.edu.cs.poo.ac.bolsa.entidade; 
+
+public enum StatusTitulo { 
+
+    ATIVO(1, "Titulo ativo"),
+    CANCELADO(2, "Titulo cancelado"),
+    VENCIDO(3, "Titulo vencido");
+
+    private final int codigo;
+    private final String descricao;
+
+    private StatusTitulo(int codigo, String descricao) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+}
