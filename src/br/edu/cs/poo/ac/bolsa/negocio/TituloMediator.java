@@ -17,7 +17,7 @@ public class TituloMediator {
     private static TituloMediator instancia;
 
     private DAO<Titulo> daoTitulo = new DAO<>(Titulo.class);
-    private AtivoMediator ativoMediator = AtivoMediator.getInstancia();
+    private AtivoMediator ativoMediator = new AtivoMediator();
     private InvestidorMediator investidorMediator = new InvestidorMediator();
 
     private TituloMediator() {}

@@ -13,6 +13,10 @@ public class DAOInvestidorPessoa extends DAOGenerico {
     public InvestidorPessoa buscar(String cpf) {
         return (InvestidorPessoa) cadastro.buscar(cpf);
     }
+    
+    public InvestidorPessoa buscarInvestidorPessoa(String cpf) {
+        return buscar(cpf);
+    }
 
     public boolean incluir(InvestidorPessoa pessoa) {
         if (buscar(pessoa.getCpf()) == null) {

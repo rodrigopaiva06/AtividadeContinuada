@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.bolsa.util.ExcecaoObjetoJaExistente;
-import br.edu.cs.poo.ac.bolsa.util.ExcecaoOobjetoNaoExistente;
+import br.edu.cs.poo.ac.bolsa.util.ExcecaoObjetoNaoExistente;
 import br.edu.cs.poo.ac.bolsa.util.Registro;
 
 public class DAO<T extends Registro> {
@@ -29,16 +29,16 @@ public class DAO<T extends Registro> {
         cadastro.incluir(objeto, objeto.getIdentificador());
     }
 
-    public void alterar(T objeto) throws ExcecaoOobjetoNaoExistente {
+    public void alterar(T objeto) throws ExcecaoObjetoNaoExistente {
         if (buscar(objeto.getIdentificador()) == null) {
-            throw new ExcecaoOobjetoNaoExistente();
+            throw new ExcecaoObjetoNaoExistente();
         }
         cadastro.alterar(objeto, objeto.getIdentificador());
     }
 
-    public void excluir(String identificador) throws ExcecaoOobjetoNaoExistente {
+    public void excluir(String identificador) throws ExcecaoObjetoNaoExistente {
         if (buscar(identificador) == null) {
-            throw new ExcecaoOobjetoNaoExistente();
+            throw new ExcecaoObjetoNaoExistente();
         }
         cadastro.excluir(identificador);
     }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 
 import br.edu.cs.poo.ac.bolsa.dao.DAO;
 import br.edu.cs.poo.ac.bolsa.util.ExcecaoObjetoJaExistente;
-import br.edu.cs.poo.ac.bolsa.util.ExcecaoOobjetoNaoExistente;
+import br.edu.cs.poo.ac.bolsa.util.ExcecaoObjetoNaoExistente;
 import br.edu.cs.poo.ac.bolsa.util.Registro;
 
 public class TesteDAO extends TesteGenerico {
@@ -69,7 +69,7 @@ public class TesteDAO extends TesteGenerico {
     @Test
     void alterar_deveLancarExcecaoQuandoNaoExiste() {
         RegistroFake r = new RegistroFake("1", "A");
-        assertThrows(ExcecaoOobjetoNaoExistente.class, () -> dao.alterar(r));
+        assertThrows(ExcecaoObjetoNaoExistente.class, () -> dao.alterar(r));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class TesteDAO extends TesteGenerico {
 
     @Test
     void excluir_deveLancarExcecaoQuandoNaoExiste() {
-        assertThrows(ExcecaoOobjetoNaoExistente.class, () -> dao.excluir("1"));
+        assertThrows(ExcecaoObjetoNaoExistente.class, () -> dao.excluir("1"));
     }
 
     @Test
