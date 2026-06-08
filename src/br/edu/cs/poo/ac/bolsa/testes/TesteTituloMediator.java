@@ -37,10 +37,10 @@ public class TesteTituloMediator extends TesteGenerico {
 
     @BeforeEach
     void setup() throws Exception {
-        limparDiretorio("Ativo");
-        limparDiretorio("InvestidorEmpresa");
-        limparDiretorio("InvestidorPessoa");
-        limparDiretorio("Titulo");
+    	limparDiretorio("Ativo");
+    	limparDiretorio("InvestidorEmpresa");
+    	limparDiretorio("InvestidorPessoa");
+    	limparDiretorio("Titulo");
         dao = new DAO<Titulo>(Titulo.class);
         ativoMediator = new AtivoMediator();
         investidorMediator = new InvestidorMediator();
@@ -61,9 +61,13 @@ public class TesteTituloMediator extends TesteGenerico {
         f.set(obj, value);
     }
 
+    // -------------------------------------------------------------
+    // MÉTODO INCLUIR — CAMINHO FELIZ
+    // -------------------------------------------------------------
+
     @Test
     void incluir_caminhoFeliz() {
-        Ativo ativo = new Ativo(
+        Ativo ativo = new Ativo( 
                 10, "Ativo XPTO",
                 500, 5000,
                 0, 100,
@@ -90,6 +94,10 @@ public class TesteTituloMediator extends TesteGenerico {
 
         assertEquals(1, dao.buscarTodos().length);
     }
+
+    // -------------------------------------------------------------
+    // MÉTODO INCLUIR — VALIDAÇÕES
+    // -------------------------------------------------------------
 
     @Test
     void incluir_cpfInvalido() {
@@ -184,6 +192,10 @@ public class TesteTituloMediator extends TesteGenerico {
         assertTrue(ex.getMensagens().contem("Valor investido fora da faixa permitida"));
     }
 
+    // -------------------------------------------------------------
+    // MÉTODO CANCELAR TÍTULO
+    // -------------------------------------------------------------
+
     @Test
     void cancelarTitulo_caminhoFeliz() {
         Ativo ativo = new Ativo(
@@ -205,9 +217,9 @@ public class TesteTituloMediator extends TesteGenerico {
                 LocalDate.now(), LocalDate.now().plusMonths(12),
                 null, StatusTitulo.ATIVO);
         try {
-            dao.incluir(titulo);
+        	dao.incluir(titulo);
         } catch (ExcecaoObjetoJaExistente e) {
-            fail("Titulo ja existente");
+        	fail("Titulo ja existente");
         }
 
         assertDoesNotThrow(() -> mediator.cancelarTitulo(titulo.getIdentificador()));
@@ -250,16 +262,21 @@ public class TesteTituloMediator extends TesteGenerico {
                 null, StatusTitulo.VENCIDO);
 
         try {
-            dao.incluir(titulo);
+        	dao.incluir(titulo);
         } catch (ExcecaoObjetoJaExistente e) {
-            fail("Titulo ja existente");
+        	fail("Titulo ja existente");
         }
+
 
         ExcecaoNegocio ex = assertThrows(ExcecaoNegocio.class,
                 () -> mediator.cancelarTitulo(titulo.getIdentificador()));
 
         assertTrue(ex.getMensagens().contem("Título não pode ser cancelado"));
     }
+
+    // -------------------------------------------------------------
+    // MÉTODO PROCESSAR RENDIMENTOS
+    // -------------------------------------------------------------
 
     @Test
     void processarRendimentos_semTitulos() {
@@ -288,10 +305,11 @@ public class TesteTituloMediator extends TesteGenerico {
                 null, StatusTitulo.ATIVO);
 
         try {
-            dao.incluir(titulo);
+        	dao.incluir(titulo);
         } catch (ExcecaoObjetoJaExistente e) {
-            fail("Titulo ja existente");
+        	fail("Titulo ja existente");
         }
+
 
         mediator.processarRendimentos();
 
@@ -306,11 +324,16 @@ public class TesteTituloMediator extends TesteGenerico {
         );
         daoAtivo.incluir(ativo);
 
+//        InvestidorPessoa inv = new InvestidorPessoa(
+//                "João", endereco, LocalDate.now().minusYears(30),
+//                BigDecimal.ZERO, contatos,
+//                "80052380610", 30000, FaixaRenda.REGULAR
+//        );
         InvestidorPessoa inv = new InvestidorPessoa();
         inv.setCpf("80052380610");
         inv.setNome("Fulano");
         inv.setEndereco(endereco);
-        inv.setDataNascimento(LocalDate.now());
+        inv.setDataNascimento(LocalDate.now());        
         inv.setContatos(criarContatosPF());
         inv.setRenda(1000000.0);
         daoInvPes.incluirInvestidorPessoa(inv);
@@ -322,9 +345,9 @@ public class TesteTituloMediator extends TesteGenerico {
                 LocalDate.now().plusDays(2),
                 null, StatusTitulo.ATIVO);
         try {
-            dao.incluir(titulo);
+        	dao.incluir(titulo);
         } catch (ExcecaoObjetoJaExistente e) {
-            fail("Titulo ja existente");
+        	fail("Titulo ja existente");
         }
 
         mediator.processarRendimentos();

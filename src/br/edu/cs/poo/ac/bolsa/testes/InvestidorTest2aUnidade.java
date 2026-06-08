@@ -16,6 +16,7 @@ import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
 
 public class InvestidorTest2aUnidade {
 
+    // Objetos dummy para permitir instanciar InvestidorEmpresa
     static class EnderecoDummy extends Endereco{}
     static class ContatosDummy extends Contatos{}
 
@@ -33,7 +34,7 @@ public class InvestidorTest2aUnidade {
         );
 
         assertEquals("123.456.789-00", pessoa.getIdentificador());
-    }
+    }    
 
     @Test
     void getEntradaFinanceira_deveRetornarBigDecimalComRenda() {
@@ -51,8 +52,8 @@ public class InvestidorTest2aUnidade {
         BigDecimal entrada = pessoa.getEntradaFinanceira();
 
         assertEquals(new BigDecimal("8200.0").setScale(1), entrada.setScale(1));
-    }
-
+    }    
+    
     @Test
     void getIdentificador_deveRetornarCnpj() {
         InvestidorEmpresa emp = new InvestidorEmpresa(
@@ -84,7 +85,7 @@ public class InvestidorTest2aUnidade {
 
         assertEquals(new BigDecimal("750000.0").setScale(1), entrada.setScale(1));
     }
-
+	
     @Test
     void deveSerClasseAbstrata() {
         int modificadores = Investidor.class.getModifiers();
