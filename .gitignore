@@ -1,1 +1,8 @@
 /bin/
+*.dat
+Ativo/
+InvestidorPessoa/
+InvestidorEmpresa/
+Titulo/
+RegistroFake/
+EntidadeFake/
