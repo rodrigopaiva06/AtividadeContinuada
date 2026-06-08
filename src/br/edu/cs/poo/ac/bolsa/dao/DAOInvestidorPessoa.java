@@ -51,7 +51,7 @@ public class DAOInvestidorPessoa extends DAOGenerico {
 
     public InvestidorPessoa[] consultarTodos() {
         Serializable[] todos = cadastro.buscarTodos();
-        if (todos == null) return null;
+        if (todos == null) return new InvestidorPessoa[0];
         InvestidorPessoa[] resultado = new InvestidorPessoa[todos.length];
         for (int i = 0; i < todos.length; i++) {
             resultado[i] = (InvestidorPessoa) todos[i];
